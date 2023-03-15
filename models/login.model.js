@@ -1,0 +1,44 @@
+export class LoginModel {
+  constructor(username, password) {
+    this.username = username;
+    this.password = password;
+    this.apiUrl = "http://127.0.0.1:8000/api/auth/login";
+    this.error = false;
+    this.serverResponse = null;
+  }
+
+  //Función para logear al usuario
+  async logIn() {
+    let data = {
+      username: this.username,
+      password: this.password,
+    };
+
+    let options = {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: "Bearer 12345561sd",
+      },
+    };
+
+    await fetch(this.apiUrl, options)
+      .then((response) => {
+        if (!response.ok) {
+          this.error = true;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (this.error) {
+          this.serverResponse = data;
+          return;
+        }
+        this.serverResponse = data.accessToken;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}
