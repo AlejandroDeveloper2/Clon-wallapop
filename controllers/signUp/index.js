@@ -4,6 +4,7 @@ import {
   renderFooter,
   showAlertMessage,
   swicthAlertMessage,
+  getTokenFromLocalstorage,
 } from "../../functions";
 
 import { SignUpController } from "./signUp.controller";
@@ -65,3 +66,9 @@ const submitFormSignUp = async (e) => {
 };
 
 form.addEventListener("submit", submitFormSignUp);
+
+//Si el usuario esta logueado lo redireciona a la pagina principal
+const token = getTokenFromLocalstorage();
+if (token) {
+  window.location.href = "/index.html";
+}
