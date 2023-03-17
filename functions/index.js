@@ -30,7 +30,7 @@ const renderNavbar = (currentUrlName = "/index.html") => {
               ? "/index.html"
               : token
               ? "/index.html"
-              : "http://localhost:5173/pages/login.html"
+              : "/pages/login.html"
           }">
             ${
               isCurrentPageLogin ||
@@ -50,7 +50,7 @@ const renderNavbar = (currentUrlName = "/index.html") => {
             : token
             ? isCurrentPageCreateProduct
               ? ""
-              : "<a class='link variant' href='http://localhost:5173/pages/createProduct.html'>Add product</a>"
+              : "<a class='link variant' href='/pages/createProduct.html'>Add product</a>"
             : ""
         }
       </li>
@@ -153,7 +153,7 @@ const renderProductCard = (productData = {}) => {
   text.append(textId);
   card.append(cardBody);
   buttonDetails.addEventListener("click", () => {
-    window.location.href = `http://localhost:5173/pages/productDetails.html?idProduct=${id}`;
+    window.location.href = `/pages/productDetails.html?idProduct=${id}`;
   });
 
   buttonDelete.addEventListener("click", removeProduct);

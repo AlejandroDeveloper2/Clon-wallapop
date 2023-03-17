@@ -22,7 +22,7 @@ signUpElement.innerHTML = `
     </div>  
     <div class="formOptions">
       <button type="submit" class="btn_signup">Create account</button>
-      <button type="button" class="btn_login" onclick="window.location.href='http://localhost:5173/pages/login.html'">Log in</button>
+      <button type="button" class="btn_login" onclick="window.location.href='/pages/login.html'">Log in</button>
     </div>
   </form>
   ${renderFooter()}
