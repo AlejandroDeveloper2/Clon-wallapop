@@ -19,6 +19,7 @@ signUpElement.innerHTML = `
     <div class="formInputs">
       <input type="text" placeholder="User name" id="input_user_name" class="input"/>
       <input type="password" placeholder="Password" id="input_password" class="input"/>
+      <input type="password" placeholder="Confirm your password" id="input_confirm_password" class="input"/>
     </div>  
     <div class="formOptions">
       <button type="submit" class="btn_signup">Create account</button>
@@ -36,9 +37,11 @@ const submitFormSignUp = async (e) => {
   e.preventDefault();
   const usernameInputValue = form.children[0].children[0].value;
   const passwordInputValue = form.children[0].children[1].value;
+  const passwordConfirmInputValue = form.children[0].children[2].value;
   const signUpController = new SignUpController(
     usernameInputValue,
     passwordInputValue,
+    passwordConfirmInputValue,
     showAlertMessage()
   );
   await signUpController

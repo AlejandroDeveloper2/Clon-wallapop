@@ -257,6 +257,16 @@ const parseJwt = (token) => {
   return JSON.parse(jsonPayload);
 };
 
+//Formateo de precio
+const formatMoney = (price) => {
+  const parsedPrice = parseInt(price);
+  const formattedPrice = parsedPrice.toLocaleString("es", {
+    style: "currency",
+    currency: "EUR",
+  });
+  return formattedPrice;
+};
+
 export {
   getCurrentPageName,
   renderNavbar,
@@ -271,4 +281,5 @@ export {
   swicthAlertMessage,
   setAlertViewType,
   parseJwt,
+  formatMoney,
 };

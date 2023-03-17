@@ -3,6 +3,7 @@ import {
   setAlertViewType,
   getTokenFromLocalstorage,
   parseJwt,
+  formatMoney,
 } from "../../functions";
 
 export class CreateProductController {
@@ -23,11 +24,12 @@ export class CreateProductController {
         return;
       }
       setAlertViewType(this.messageView, "Saving product...!", "loading");
+      const formattedPrice = formatMoney(price);
       const createProductModel = new CreateProductModel(
         productPhoto,
         name,
         description,
-        price,
+        formattedPrice,
         type,
         creator
       );
