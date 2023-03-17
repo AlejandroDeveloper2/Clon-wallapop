@@ -2,7 +2,7 @@ export class SignUpModel {
   constructor(username, password) {
     this.username = username;
     this.password = password;
-    this.apiUrl = "http://127.0.0.1:8000/api/auth/register";
+    this.apiUrl = "http://127.0.0.1:8000/auth/register";
     this.error = false;
     this.serverResponse = null;
   }

@@ -12,20 +12,22 @@
     left:0;
 }
 
-.alertSuccess, .alertLoading, .alertError{
+.alert{
     width: 15rem;
     height: 5rem;
     display: flex;
-    background-color: rgb(25, 155, 25);
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
 }
+.success{
+    background-color: rgb(17, 156, 17);
+}
 
-.alertLoading{
+.loading{
     background-color: var(--secondary-color);
 }
-.alertError  {
+.error  {
     background-color: rgb(192, 12, 12);
 }
 

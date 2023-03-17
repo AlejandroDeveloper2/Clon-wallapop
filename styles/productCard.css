@@ -1,29 +1,49 @@
 .card{
     width: 80%;
-    height: 15rem;
+    height: 25rem;
     background-color: var(--primary-color);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap:1.5rem;
-    overflow: hidden;
     box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem rgba(0,0,0,0.2);
-    cursor:pointer;
+    position: relative;
+    overflow: hidden;
 }
 
-.card:hover{
-    transform: scale(1.1);
+.card.details{
+    height: auto;
+    cursor:auto;
+}
+
+.cardBody.details span:last-of-type{
+    background-color: var(--black);
+    color: var(--white);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.cardBody.details span:nth-of-type(2){
+    font-weight: bold;
 }
 
 .cardHead{
     width: 100%;
-    height: 10rem;
+    height: 15rem;
 }
 .productPhoto{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
+    z-index:-1;
+}
+.cardBody.details{
+    padding: 1rem;
+    gap:0.5rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .text{
@@ -32,8 +52,61 @@
     color:var(--secondary-color);
 }
 
+.paragraph{
+    font-size: 1rem;
+    font-weight: 400;
+    color:var(--secondary-color-opacity);
+    text-align: justify;
+}
+
+.hidden{
+    display: none;
+}
+
+.btn_delete_product{
+    width: 6rem;
+    border: 2px solid var(--secondary-color-opacity);
+    background-color: transparent;
+    text-align: center;
+    color:var(--secondary-color-opacity);
+    padding: 0.5rem;
+    position: absolute;
+    left: 1.5rem;
+    bottom:3rem;
+    border-radius: 0.5rem;
+    cursor:pointer;
+}   
+.btn_details{
+    width: 6rem;
+    border: 2px solid var(--secondary-color-opacity);
+    background-color: transparent;
+    text-align: center;
+    color:var(--secondary-color-opacity);
+    padding: 0.5rem;
+    position: absolute;
+    bottom:3rem;
+    border-radius: 0.5rem;
+    cursor:pointer;
+    right: 1.5rem;
+}
+
+.textId{
+    display: none;
+}
+
 @media (min-width:768px){
     .card{
         width: 20rem;
+    }
+    .btn_delete_product{
+        width: 8rem;
+        left: 1.5rem;
+    }   
+    .btn_details{  
+        width: 8rem;  
+        right: 1.5rem;
+    }
+    .cardBody.details{
+        padding-bottom: 2rem;
     }
 }

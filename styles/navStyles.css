@@ -1,12 +1,13 @@
 .navigation{
     display: flex;
-    flex-direction: row;   
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;   
+    justify-content: center;
+    align-items: flex-start;
     width: 100%;
     padding:2rem 1rem;
     border-bottom:2px solid var(--secondary-color-opacity);
     position: relative;
+    gap:2rem;
 }
 .logo{
     color:var(--secondary-color);
@@ -49,16 +50,13 @@
     background-color: var(--secondary-color-opacity);
 }
 
-.addProductLink, .variant{
-    display: none;
-}
-
 @media (min-width: 768px){
-    .addProductLink, .variant{
-        display:block;
-    }
     .logo{
         font-size: 1.8rem;
     }
-
+    .navigation{       
+        flex-direction: row; 
+        justify-content: space-between;  
+        gap:0;
+    }
 }

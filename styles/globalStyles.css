@@ -22,31 +22,19 @@ body{
     padding: 0;
 }
 
-#app, #login, #signup{
+#app, #login, #signup, #productDetails, #createProductContent{
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap:2rem;
+    gap:1rem;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
-.btn_add_new_product{
-    font-size:0.8rem;
-    padding: 1rem 1rem;
-    border-radius:1rem;
-    background-color: var(--secondary-color);
-    color:var(--white);
-    position: fixed;
-    right: 0.5rem;
-    bottom: 6rem;
-    border: none;
-    cursor: pointer;
-}
-
-.btn_login, .btn_signup{
+.btn_login, .btn_signup, .btn_logout{  
     font-size:0.8rem;
     padding: 1rem 1rem;
     border-radius:1rem;
@@ -57,17 +45,24 @@ body{
     font-weight:600;
 }
 
-.btn_add_new_product:hover,.btn_login:hover{
+.btn_login:hover{
     background-color: var(--secondary-color-opacity);
 }
 .btn_signup:hover{
     border: 2px solid rgba(0, 0, 0, 0.1);
 }
 
-.btn_signup{
+.btn_signup, .btn_logout{
     border:2px solid  var(--secondary-color-opacity);
     background-color: transparent;
     color:var(--secondary-color-opacity);
+}
+
+.btn_logout{
+    position: absolute;
+    top:1rem;
+    right: 1.5rem;
+    width: 6rem;
 }
 
 .pageTitle{
@@ -120,9 +115,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top:2rem;
-    padding: 0 1rem;
+    padding: 1rem;
     width: 100%;
+    gap:1rem;
 }
 
 .emptyContainer{
@@ -143,10 +138,15 @@ body{
     text-align: center;
 }
 
+.productForm{
+    height: 40rem;
+}
+
+.textarea{
+    height: 5rem;
+}
+
 @media (min-width: 768px) {
-    .btn_add_new_product{
-        display: none;
-    }
     .form{
         padding: 2rem 2rem;
         width: 30rem;
@@ -158,5 +158,13 @@ body{
     }
     .productList{
         justify-content: flex-start;
+    }
+    #app, #login, #signup, #productDetails{
+        gap:2rem;
+    }
+    .btn_logout{
+        top:2.1rem;
+        right: 25rem;
+        width: 6rem;
     }
 }

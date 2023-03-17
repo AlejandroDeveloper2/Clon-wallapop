@@ -1,41 +1,34 @@
 import { SignUpModel } from "../../models/signUp.model";
-import { showAlertMessage } from "../../functions";
+import { setAlertViewType } from "../../functions";
 
 export class SignUpController {
-  constructor(username, password) {
-    this.messageView = null;
+  constructor(username, password, messageView) {
+    this.messageView = messageView;
     this.userCredentials = {
       username,
       password,
     };
   }
-
   async createUser() {
     try {
       const { username, password } = this.userCredentials;
-
       if ([username, password].includes("")) {
-        this.messageView = showAlertMessage(
-          "All fields are required!",
-          "error"
-        );
+        setAlertViewType(this.messageView, "All fields are required!", "error");
         return;
       }
-
       const signUpModel = new SignUpModel(username, password);
-      this.messageView = showAlertMessage("Creating user...!", "loading");
-
+      setAlertViewType(this.messageView, "Creating user...!", "loading");
       await signUpModel.signUp();
-
       if (signUpModel.error) {
-        this.messageView = showAlertMessage(
+        setAlertViewType(
+          this.messageView,
           signUpModel.serverResponse.message,
           "error"
         );
         return;
       }
-
-      this.messageView = showAlertMessage(
+      setAlertViewType(
+        this.messageView,
         "User created successfully!",
         "success"
       );

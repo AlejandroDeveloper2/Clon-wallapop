@@ -2,6 +2,8 @@ import {
   getCurrentPageName,
   renderNavbar,
   renderFooter,
+  showAlertMessage,
+  swicthAlertMessage,
 } from "../../functions";
 
 import { LoginController } from "./login.controller";
@@ -20,31 +22,41 @@ loginContainerElement.innerHTML = `
     </div>  
     <div class="formOptions">
       <button type="submit" class="btn_login">Log in</button>
-      <button type="button" class="btn_signup" onclick="window.location.href='http://127.0.0.1:5173/pages/signUp.html'">Sign up</button>
+      <button type="button" class="btn_signup" onclick="window.location.href='http://localhost:5173/pages/signUp.html'">Sign up</button>
     </div>
   </form>
   ${renderFooter()}
 `;
 
 const form = loginContainerElement.children[2];
-
+let count = 0;
 const submitFormLogin = async (e) => {
+  count++;
   e.preventDefault();
   const usernameInputValue = form.children[0].children[0].value;
   const passwordInputValue = form.children[0].children[1].value;
   const loginController = new LoginController(
     usernameInputValue,
-    passwordInputValue
+    passwordInputValue,
+    showAlertMessage()
   );
   await loginController
     .authenticateUser()
     .then(() => {
-      loginContainerElement.append(loginController.messageView);
+      const message =
+        loginController.messageView.children[0].children[0].innerText;
+      const alertType = loginController.messageView.children[0].classList;
+      //Para evitar que se creen multiples alertas
+      if (count === 1) {
+        loginContainerElement.append(loginController.messageView);
+      } else {
+        swicthAlertMessage("", loginContainerElement, message, alertType);
+      }
     })
     .finally(() => {
-      //Ocultamos la alerta ya que la peticion ya finalizó satisfactoriamente
+      //Ocultamos la alerta
       setTimeout(() => {
-        loginController.messageView.classList = "alertContainer hide";
+        swicthAlertMessage("hide", loginContainerElement);
       }, 1500);
     });
 };

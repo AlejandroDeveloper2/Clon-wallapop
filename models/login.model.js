@@ -2,7 +2,7 @@ export class LoginModel {
   constructor(username, password) {
     this.username = username;
     this.password = password;
-    this.apiUrl = "http://127.0.0.1:8000/api/auth/login";
+    this.apiUrl = "http://127.0.0.1:8000/auth/login";
     this.error = false;
     this.serverResponse = null;
   }
@@ -19,7 +19,6 @@ export class LoginModel {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        // Authorization: "Bearer 12345561sd",
       },
     };
 

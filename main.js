@@ -1,7 +1,10 @@
 import {
   renderNavbar,
   renderFooter,
-  renderEmptyProductList,
+  renderLogOutButton,
+  getTokenFromLocalstorage,
+  showAlertMessage,
+  swicthAlertMessage,
 } from "./functions";
 import { ProductListController } from "./controllers/productList/productList.controller";
 
@@ -18,40 +21,48 @@ appElement.innerHTML = `
   ${renderNavbar()}
   <h1 class="pageTitle">Product list</h1>
   ${renderFooter()}
-  <button type="button" class="btn_add_new_product">
-    Add product
-  </button>
 `;
+
+if (getTokenFromLocalstorage()) {
+  //Creamos el boton para cerrar sesión
+  const logOutButton = renderLogOutButton();
+  //Añadimos el boton al contenedor principal
+  appElement.append(logOutButton);
+}
+let count = 0;
 
 //Función asincrona para ejecutar el controlador de la lista de productos y obtener el listado de productos
 const renderProductList = async () => {
+  count++;
   //instanciamos la clase del controlador
-  const productListController = new ProductListController();
+  const productListController = new ProductListController(
+    productList,
+    showAlertMessage(),
+    appElement
+  );
   //Accedemos a la función getAllProducts para obtener los productos
   await productListController
     .getAllProducts()
     .then(() => {
-      /*Accedemos a la propiedad productListView que es un array 
-      que contiene los elementos productCard con la información 
-      de cada producto y añadimos esta lista al contenedor correspondiente
-      Validamos si el array viene vacio o con datos
-      */
-      if (productListController.productListView.length > 0) {
-        productListController.productListView.forEach((productCard) => {
-          productList.append(productCard);
-        });
-      } else {
-        productList.append(renderEmptyProductList());
-      }
       //Agregamos la lista de productos al contenedor #app
-      appElement.append(productList);
+      appElement.append(productListController.productListView);
+
+      const message =
+        productListController.messageView.children[0].children[0].innerText;
+      const alertType = productListController.messageView.children[0].classList;
+
       //Agregamos la alerta al contenedor #app
-      appElement.append(productListController.messageView);
+      //Para evitar que se creen multiples alertas
+      if (count === 1) {
+        appElement.append(productListController.messageView);
+      } else {
+        swicthAlertMessage("", appElement, message, alertType);
+      }
     })
     .finally(() => {
       //Ocultamos la alerta ya que la carga de productos ya finalizó satisfactoriamente
       setTimeout(() => {
-        productListController.messageView.classList = "alertContainer hide";
+        swicthAlertMessage("hide", appElement);
       }, 1500);
     });
 };
