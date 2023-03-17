@@ -4,6 +4,7 @@ import {
   renderFooter,
   showAlertMessage,
   swicthAlertMessage,
+  getTokenFromLocalstorage,
 } from "../../functions";
 
 import { CreateProductController } from "./createProduct.controller";
@@ -82,3 +83,10 @@ const submitFormCreateProduct = async (e) => {
 };
 
 form.addEventListener("submit", submitFormCreateProduct);
+
+//Validamos si el usuario esta logueado si no esta logueado se redureccionara a la pagina principal
+const token = getTokenFromLocalstorage();
+if (!token) {
+  window.location.href = "/index.html";
+  alert("You must be logged to be able to access this page!");
+}

@@ -31,7 +31,6 @@ body{
     gap:1rem;
     position: relative;
     overflow-x: hidden;
-    overflow-y: scroll;
 }
 
 .btn_login, .btn_signup, .btn_logout{  
