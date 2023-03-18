@@ -15,29 +15,31 @@ export class ProductListController {
     this.productListView = productListView;
     this.messageView = messageView;
     this.appElementView = appElementView;
-    this.data = [];
+    this.products = [];
+    this.totalProducts = 0;
   }
 
   /*Metodo para obtener todos los productos del modelo 
   y una vez obtenidos añadirlos a un array de cards 
   para posteriormente mostrarlos en la vista*/
-  async getAllProducts() {
+  async getAllProducts(page) {
     try {
       setAlertViewType(this.messageView, "Loading products...", "loading");
-
-      await this.productListModel.fetchProducts();
-      const data = this.productListModel.getProductList();
+      await this.productListModel.fetchProducts(page);
+      this.products = this.productListModel.getProductList();
       if (!this.productListModel.error) {
-        if (data.length > 0) {
-          this.data = data;
-          data.forEach((item) => {
+        if (this.products.length > 0) {
+          if (page < 1) page = 1;
+          if (page > Math.ceil(this.products.length / 5))
+            page = Math.ceil(this.products.length / 5);
+          this.productListView.innerHTML = "";
+          this.products.forEach((item) => {
             let productCard = renderProductCard({
               ...item,
               removeProduct: () => this.removeProduct(item.id),
             });
             this.productListView.append(productCard);
           });
-
           setAlertViewType(
             this.messageView,
             "Products has been loaded successfully!",
@@ -67,8 +69,8 @@ export class ProductListController {
       if (deleting) {
         const res = await this.productListModel.deleteProduct(id, token);
         if (res === "ok") {
-          this.data = this.data.filter((item) => item.id !== id);
-          if (this.data.length === 0) {
+          this.products = this.products.filter((item) => item.id !== id);
+          if (this.products.length === 0) {
             setTimeout(() => {
               window.location.reload();
             }, 1500);
@@ -80,8 +82,9 @@ export class ProductListController {
           ) {
             const card = this.productListView.children[index];
             if (
-              parseInt(card.children[1].children[0].children[0].innerText) ===
-              id
+              parseInt(
+                card.children[0].children[1].children[0].children[0].innerText
+              ) === id
             ) {
               this.productListView.removeChild(card);
               //Configuramos la alerta
@@ -115,9 +118,19 @@ export class ProductListController {
     }
   }
 
+  //Ventana para la confirmación de eliminación de producto
   showConfirmPrompt() {
     let text = "are you sure to delete this product?";
     if (confirm(text) == true) return true;
     return false;
+  }
+
+  async getTotalProducts() {
+    try {
+      await this.productListModel.fetchProducts(null);
+      this.totalProducts = this.productListModel.getProductList().length;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

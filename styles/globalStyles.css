@@ -35,7 +35,7 @@ body{
     padding-bottom: 2rem;
 }
 
-.btn_login, .btn_signup, .btn_logout{  
+.btn_login, .btn_signup, .btn_logout,.btn_paginate{  
     font-size:0.8rem;
     padding: 1rem 1rem;
     border-radius:1rem;
@@ -51,6 +51,9 @@ body{
 }
 .btn_signup:hover{
     border: 2px solid rgba(0, 0, 0, 0.1);
+}
+.btt_paginate:hover{
+    background-color: var(--secondary-color-opacity);
 }
 
 .btn_signup, .btn_logout{
@@ -118,7 +121,7 @@ body{
     align-items: center;
     padding: 1rem;
     width: 100%;
-    gap:1rem;
+    gap:1.5rem;
 }
 
 .emptyContainer{
@@ -147,6 +150,17 @@ body{
     height: 5rem;
 }
 
+.pagination{
+    width: 100%;
+    padding:2rem;
+    background-color:transparent;
+    position: fixed;
+    bottom:1rem;
+    display:flex;
+    justify-content: space-between;
+    z-index: 9;
+}
+
 @media (min-width: 768px) {
     .form{
         padding: 2rem 2rem;
@@ -162,10 +176,16 @@ body{
     }
     #app, #login, #signup, #productDetails{
         gap:2rem;
+        padding-bottom: 4rem;
     }
     .btn_logout{
         top:2.1rem;
         right: 25rem;
         width: 6rem;
+    }
+
+    .pagination{
+        width: 60%;
+        bottom:5rem;
     }
 }

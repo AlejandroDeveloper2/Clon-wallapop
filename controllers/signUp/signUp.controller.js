@@ -1,5 +1,6 @@
 import { SignUpModel } from "../../models/signUp.model";
-import { setAlertViewType } from "../../functions";
+import { LoginModel } from "../../models/login.model";
+import { setAlertViewType, saveTokenToLocalstorage } from "../../functions";
 
 export class SignUpController {
   constructor(username, password, passwordConfirm, messageView) {
@@ -13,7 +14,7 @@ export class SignUpController {
   async createUser() {
     try {
       const { username, password, passwordConfirm } = this.userCredentials;
-      if ([username, password].includes("")) {
+      if ([username, password, passwordConfirm].includes("")) {
         setAlertViewType(this.messageView, "All fields are required!", "error");
         return;
       }
@@ -26,6 +27,8 @@ export class SignUpController {
         return;
       }
       const signUpModel = new SignUpModel(username, password);
+      const loginModel = new LoginModel(username, password);
+
       setAlertViewType(this.messageView, "Creating user...!", "loading");
       await signUpModel.signUp();
       if (signUpModel.error) {
@@ -41,6 +44,12 @@ export class SignUpController {
         "User created successfully!",
         "success"
       );
+
+      //Logueamos a el usuario automaticamente una vez registrado
+      await loginModel.logIn();
+      const token = loginModel.serverResponse;
+      saveTokenToLocalstorage(token);
+      window.location.href = "/index.html";
     } catch (error) {
       console.log(error);
     }

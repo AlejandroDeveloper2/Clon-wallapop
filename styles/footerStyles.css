@@ -16,7 +16,7 @@
 @media (min-width:768px){
     .footerPage{     
         position: fixed;
-        bottom:0;
+        bottom:-1rem;
         left: 0;
         z-index:9;
         display: flex;

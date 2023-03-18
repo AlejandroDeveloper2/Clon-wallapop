@@ -16,7 +16,10 @@ export class ProductListModel {
   }
 
   //Función que hace la petición get a la APi para obtener todos los productos
-  async fetchProducts() {
+  async fetchProducts(page = null) {
+    this.apiUrl = page
+      ? `http://127.0.0.1:8000/api/products?_page=${page}&_limit=5`
+      : "http://127.0.0.1:8000/api/products";
     await fetch(this.apiUrl)
       .then((response) => {
         if (!response.ok) {

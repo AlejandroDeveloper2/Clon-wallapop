@@ -99,13 +99,6 @@ const setAlertViewType = (messageView, message, type) => {
   messageView.children[0].children[0].innerText = message;
 };
 
-//Función para renderizar el boton para ir a la pagina de detalle del producto
-const renderSeeProductDetails = () => {
-  const button = document.createElement("button");
-  button.classList = "btn_details";
-  button.append("See details");
-  return button;
-};
 // creamos el boton para eliminar producto
 const renderDeleteProduct = () => {
   const buttonDeleteProduct = document.createElement("button");
@@ -118,47 +111,51 @@ const renderDeleteProduct = () => {
 //Función para renderizar las card con la información de los productos o anuncios
 const renderProductCard = (productData = {}) => {
   const token = getTokenFromLocalstorage();
-  const { id, productPhoto, name, removeProduct, userId } = productData;
-  const buttonDetails = renderSeeProductDetails();
+  const { id, productPhoto, name, removeProduct, userId, type } = productData;
   const buttonDelete = renderDeleteProduct();
+  const cardContainer = document.createElement("div");
   const card = document.createElement("div");
   const cardHead = document.createElement("div");
   const cardImage = document.createElement("img");
   const cardBody = document.createElement("div");
   const text = document.createElement("span");
+  const text2 = document.createElement("span");
   const textId = document.createElement("small");
   textId.classList = "textId";
   card.classList = "card";
+  cardContainer.classList = "cardContainer";
   cardHead.classList = "cardHead";
   cardImage.classList = "productPhoto";
   cardBody.classList = "cardBody";
   text.classList = "text";
+  text2.classList = "text";
   cardImage.alt = name;
   cardImage.src = productPhoto;
   card.id = "product";
   textId.append(id);
   cardHead.append(cardImage);
   card.append(cardHead);
-  cardBody.append(text);
+  cardBody.append(text, text2);
+  cardContainer.append(card);
 
   //obtenemos la información del usuario logueado
   const loggedUser = token ? parseJwt(token) : 1;
   if (token && loggedUser?.userId === userId) {
     buttonDelete.classList = "btn_delete_product";
   }
-  cardBody.append(buttonDelete);
-  cardBody.append(buttonDetails);
+  cardContainer.append(buttonDelete);
 
   text.append(name);
+  text2.append(type);
   text.append(textId);
   card.append(cardBody);
-  buttonDetails.addEventListener("click", () => {
+  card.addEventListener("click", () => {
     window.location.href = `/pages/productDetails.html?idProduct=${id}`;
   });
 
   buttonDelete.addEventListener("click", removeProduct);
 
-  return card;
+  return cardContainer;
 };
 
 //Función para renderizar una imagen que le indique al usuario que no hay productos para listar
@@ -169,7 +166,7 @@ const renderEmptyProductList = () => {
   emptyContainer.classList = "emptyContainer";
   emptyImage.classList = "empty";
   emptyImage.alt = "Empty list";
-  emptyImage.src = "../public/images/empty.png";
+  emptyImage.src = "/images/empty.png";
   emptyText.append("There're not any products to show!");
   emptyContainer.append(emptyImage);
   emptyContainer.append(emptyText);
